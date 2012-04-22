@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.bahadirakin</groupId>
+	<artifactId>XStreamAnnotation</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+
+	<name>XStreamAnnotation</name>
+	<description>XStream Annotation Example</description>
+
+	<developers>
+		<developer>
+			<id>1</id>
+			<name>Bahadır AKIN</name>
+			<email>info@bahadirakin.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<url>http://www.bahadirakin.com</url>
+		</developer>
+	</developers>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<!-- XSTREAM DEPENDENCY -->
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<!-- JUNIT DEPENDENCY FOR TESTING -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
