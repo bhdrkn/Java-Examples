@@ -17,10 +17,9 @@
 		<!-- <property name="hibernate.current_session_context_class">org.hibernate.context.JTASessionContext</property> 
 			<property name="jta.UserTransaction">java:comp/UserTransaction</property> -->
 		<!-- <property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property> -->
-		<!-- <property name="hibernate.show_sql" >false</property> <property name="hibernate.format_sql">true</property> -->
-		
-		<mapping class="com.bahadirakin.model.User"/>
-		<mapping class="com.bahadirakin.model.Car"/>
+		<!-- <property name="hibernate.show_sql">true</property> <property name="hibernate.format_sql">true</property> -->
+		<mapping class="com.bahadirakin.model.User" />
+		<mapping class="com.bahadirakin.model.Car" />
 
 	</session-factory>
 </hibernate-configuration>
