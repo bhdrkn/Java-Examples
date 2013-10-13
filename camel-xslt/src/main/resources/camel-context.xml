@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+   http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+    http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd    
+    ">
+
+	<!-- Camel Endpoints -->
+	<cxf:cxfEndpoint id="helloWorldService.v1.camel"
+		wsdlURL="wsdl/HelloWorldService.v1.wsdl" address="/HelloWorld"
+		endpointName="ns:HelloWorldServicePort" serviceName="ns:HelloWorldServiceService"
+		xmlns:ns="http://v1.helloworld.bahadirakin.com/">
+		<cxf:properties>
+			<entry key="dataFormat" value="MESSAGE" />
+		</cxf:properties>
+	</cxf:cxfEndpoint>
+
+	<cxf:cxfEndpoint id="helloWorldService.v2.camel"
+		address="/HelloWorldv2" endpointName="ns:HelloWorldServicePort"
+		wsdlURL="wsdl/HelloWorldService.v2.wsdl" serviceName="ns:HelloWorldServiceService"
+		xmlns:ns="http://v2.helloworld.bahadirakin.com/">
+		<cxf:properties>
+			<entry key="dataFormat" value="MESSAGE" />
+		</cxf:properties>
+	</cxf:cxfEndpoint>
+
+	<!-- http://camel.apache.org/cxf.html -->
+	<camel:camelContext xmlns="http://camel.apache.org/schema/spring">
+
+		<camel:route id="route">
+			<camel:from uri="cxf:bean:helloWorldService.v1.camel" />
+			<camel:to uri="xslt://xslt/sayHello.v1.to.v2.xslt" />
+			<camel:to uri="cxf:bean:helloWorldService.v2.camel" />
+		</camel:route>
+	</camel:camelContext>
+
+</beans>
