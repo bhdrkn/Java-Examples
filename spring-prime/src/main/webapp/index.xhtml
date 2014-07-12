@@ -3,14 +3,56 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:head>
+<h:head>
 
-	</h:head>
-	
-	<h:body>
-	
-		<p:spinner />
-		
-	</h:body>
+</h:head>
+
+<h:body>
+
+	<h:form prependId="false" id="carInputForm">
+		<h:panelGrid columns="2">
+
+			<h:outputLabel value="Brand: " />
+			<p:inputText value="#{carBean.car.brand}" />
+
+			<h:outputLabel value="Year: " />
+			<p:inputText value="#{carBean.car.year}" />
+
+			<h:outputLabel value="Color: " />
+			<p:inputText value="#{carBean.car.color}" />
+
+			<h:outputLabel value="Price: " />
+			<p:inputText value="#{carBean.car.price}" />
+
+			<p:commandButton value="Save" action="#{carBean.save}"
+				partialSubmit="true" process="carInputForm"
+				update="carInputForm,carList" />
+		</h:panelGrid>
+
+
+		<p:dataTable id="carList" var="car" value="#{carBean.cars}">
+			<p:column headerText="Id">
+				<h:outputText value="#{car.id}" />
+			</p:column>
+
+			<p:column headerText="Year">
+				<h:outputText value="#{car.year}" />
+			</p:column>
+
+			<p:column headerText="Brand">
+				<h:outputText value="#{car.brand}" />
+			</p:column>
+
+			<p:column headerText="Color">
+				<h:outputText value="#{car.color}" />
+			</p:column>
+
+			<p:column headerText="Price">
+				<h:outputText value="#{car.price}" />
+			</p:column>
+		</p:dataTable>
+
+	</h:form>
+</h:body>
 </html>
 
