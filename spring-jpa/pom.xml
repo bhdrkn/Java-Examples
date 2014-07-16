@@ -137,13 +137,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Utils -->
-		<dependency>
-			<groupId>org.jodah</groupId>
-			<artifactId>typetools</artifactId>
-			<version>${typetools.version}</version>
-		</dependency>
-
 
 		<!-- Test Engine Dependencies -->
 		<dependency>
