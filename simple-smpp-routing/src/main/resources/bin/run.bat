@@ -1,0 +1,1 @@
+java -cp .;conf/*;lib/*;../* com.bahadirakin.App

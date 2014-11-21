@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+   http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+    ">
+
+    <camel:camelContext xmlns="http://camel.apache.org/schema/spring">
+
+
+        <camel:endpoint id="jpaEndpoint" uri="jpa:com.bahadirakin.entities.ShortMessage?persistenceUnit=default&amp;consumeDelete=${polling.consumeDelete}&amp;consumeLockEntity=${polling.consumeLockEntity}&amp;flushOnSend=${polling.flushOnSend}&amp;maximumResults=${polling.maximumResults}&amp;consumer.delay=${polling.consumer.delay}&amp;consumer.initialDelay=${polling.consumer.initialDelay}&amp;consumer.lockModeType=${polling.consumer.lockModeType}&amp;transactionManager=#transactionManager&amp;consumer.query=select m from com.bahadirakin.entities.ShortMessage m" />
+        <camel:endpoint id="smppEndpoint" uri="smpp://${smpp.username}@${smpp.host}:${smpp.port}?password=${smpp.password}&amp;systemType=${smpp.systemType}&amp;dataCoding=${smpp.dataCoding}&amp;alphabet=${smpp.alphabet}&amp;encoding=${smpp.encoding}&amp;enquireLinkTimer=${smpp.enquireLinkTimer}&amp;initialReconnectDelay=${smpp.initialReconnectDelay}&amp;reconnectDelay=${smpp.reconnectDelay}&amp;serviceType=${smpp.serviceType}&amp;sourceAddr=${smpp.sourceAddr}&amp;sourceAddrTon=${smpp.sourceAddrTon}&amp;sourceAddrNpi=${smpp.sourceAddrNpi}&amp;priorityFlag=${smpp.priorityFlag}" />
+
+        <camel:route id="route">
+            <camel:from ref="jpaEndpoint"/>
+            <camel:choice>
+                <camel:when>
+                    <camel:simple>${in.body.sourceAddress} != null</camel:simple>
+                    <camel:setHeader headerName="CamelSmppSourceAddr">
+                        <camel:simple>${in.body.sourceAddress}</camel:simple>
+                    </camel:setHeader>
+                </camel:when>
+            </camel:choice>
+            <camel:choice>
+                <camel:when>
+                    <camel:simple>${in.body.sourceTon} != null</camel:simple>
+                    <camel:setHeader headerName="CamelSmppSourceAddrTon">
+                        <camel:simple resultType="java.lang.Byte">${in.body.sourceTon}</camel:simple>
+                    </camel:setHeader>
+                </camel:when>
+            </camel:choice>
+            <camel:choice>
+                <camel:when>
+                    <camel:simple>${in.body.sourceNpi} != null</camel:simple>
+                    <camel:setHeader headerName="CamelSmppSourceAddrNpi">
+                        <camel:simple resultType="java.lang.Byte">${in.body.sourceNpi}</camel:simple>
+                    </camel:setHeader>
+                </camel:when>
+            </camel:choice>
+            <camel:setHeader headerName="CamelSmppDestAddr" >
+                <camel:simple>${in.body.destinationAddress}</camel:simple>
+            </camel:setHeader>
+            <camel:setHeader headerName="CamelSmppDestAddrTon">
+                <camel:simple  resultType="java.lang.Byte">${in.body.destinationTon}</camel:simple>
+            </camel:setHeader>
+            <camel:setHeader headerName="CamelSmppDestAddrNpi">
+                <camel:simple  resultType="java.lang.Byte">${in.body.destinationNpi}</camel:simple>
+            </camel:setHeader>
+            <camel:choice>
+                <camel:when>
+                    <camel:simple>${in.body.priorityFlag} != null</camel:simple>
+                    <camel:setHeader headerName="CamelSmppPriorityFlag">
+                        <camel:simple resultType="java.lang.Byte">${in.body.priorityFlag}</camel:simple>
+                    </camel:setHeader>
+                </camel:when>
+            </camel:choice>
+            <camel:convertBodyTo type="java.lang.String" />
+            <camel:to ref="smppEndpoint" />
+        </camel:route>
+    </camel:camelContext>
+
+</beans>
