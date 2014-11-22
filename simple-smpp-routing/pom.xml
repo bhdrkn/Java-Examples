@@ -47,6 +47,7 @@
                         <exclude>**/conf/*</exclude>
                         <exclude>**/bin/*</exclude>
                         <exclude>**/logback.xml</exclude>
+                        <exclude>**/import.sql</exclude>
                     </excludes>
                 </configuration>
             </plugin>
