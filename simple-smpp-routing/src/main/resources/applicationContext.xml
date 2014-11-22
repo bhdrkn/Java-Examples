@@ -26,8 +26,6 @@
             ignore-resource-not-found="true" ignore-unresolvable="true"
             system-properties-mode="ENVIRONMENT" properties-ref="applicationProperties" />
 
-    <bean id="smDao" class="com.bahadirakin.dao.SmDaoImpl" />
-
     <context:annotation-config/>
 
 </beans>
