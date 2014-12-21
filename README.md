@@ -10,6 +10,7 @@ These are my example project to demonstrate some of the topic which are explaine
 * **camel-soap**: This is an example project which demonstrates how to use Camel's Soap component... [read more](http://www.bahadirakin.com/camel-soap-ve-nesneler/)
 * **camel-xslt**: This is an example project which demonstrates how to use xslt transformation by using Camel...[read more](http://www.bahadirakin.com/apache-camel-ve-xslt/)
 * **download-servlet**: This is an example project which demonstrates how to use servlets to download data from servers...[read more](http://www.bahadirakin.com/servlet-yerel-dosya-yayinlama/)
+* **jce-encrypt**: This is an example project which demonstrates how to encrypt plain-texts using AES or DES... [read more](http://www.bahadirakin.com/jce-sifrelemeler-ve-hatalar/)
 * **rest-tutorial**: This is an example project which demonstrates how to develop restful web services using Jersey and Hibernate...[read more](http://www.bahadirakin.com/restful-web-servisleri-hazirlik/)
 * **simple-smpp-routing**: This is an example project which demonstrates how to use camel to route JPA entities to SMPP endpoint. This project can be also used as a template project to create a Bulk-SMS application...[read more](http://www.bahadirakin.com/java-smpp-ve-camel/)
 * **spring-cxf**: This is an example project which demonstrates how to develop CXF application which uses Spring...[read more](http://www.bahadirakin.com/spring-ve-cxf-ile-soap-web-servisleri/)
