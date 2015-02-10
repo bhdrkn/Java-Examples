@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+
+       <context:property-placeholder local-override="true"
+                                     system-properties-mode="OVERRIDE"
+                                     file-encoding="UTF-8"
+                                     ignore-resource-not-found="false"
+                                     location="classpath*:mongodb.properties" />
+
+       <mongo:mongo id="mongo"
+                    host="${mongodb.hostaddress}"
+                    port="${mongodb.port}" />
+
+       <mongo:db-factory username="${mongodb.username}"
+                         password="${mongodb.password}"
+                         dbname="${mongodb.database}"
+                         mongo-ref="mongo"/>
+
+       <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+           <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+       </bean>
+
+       <mongo:repositories base-package="com.bahadirakin.dao" />
+</beans>
