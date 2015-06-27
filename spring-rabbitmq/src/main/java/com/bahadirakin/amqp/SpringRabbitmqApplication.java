@@ -29,7 +29,7 @@ public class SpringRabbitmqApplication implements CommandLineRunner{
 
     @Bean
     Queue queue() {
-        return new Queue(QUEUE, true); // Durable, keeps messages after restarts, a.k.a persisted
+        return new Queue(QUEUE, true); // Durable
     }
 
     @Bean
