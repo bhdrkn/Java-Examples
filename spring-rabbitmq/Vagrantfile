@@ -1,0 +1,24 @@
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.provision "shell", inline: <<-SHELL
+    echo 'deb http://www.rabbitmq.com/debian/ testing main' >/etc/apt/sources.list.d/rabbitmq.list
+    wget http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+    apt-key add rabbitmq-signing-key-public.asc
+    apt-get update
+
+    apt-get install -q -y rabbitmq-server
+
+    # RabbitMQ Plugins
+    service rabbitmq-server stop
+    rabbitmq-plugins enable rabbitmq_management
+  SHELL
+  config.vm.provision "file", source:"./rabbitmq.config", destination:"~/rabbitmq.config"
+  config.vm.provision "shell", inline: <<-SHELL
+    cp /home/vagrant/rabbitmq.config /etc/rabbitmq/rabbitmq.config
+    # Start service
+    service rabbitmq-server start
+    rabbitmq-plugins list
+  SHELL
+end
