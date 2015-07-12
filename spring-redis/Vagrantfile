@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby ts=2 sw=2 expandtab:
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install build-essential
+    apt-get install tcl8.5
+
+    wget http://download.redis.io/releases/redis-stable.tar.gz
+    tar xzf redis-stable.tar.gz
+    cd redis-stable
+    make
+    make test
+    make install
+    cd utils
+    ./install_server.sh
+
+    update-rc.d redis_6379 defaults
+  SHELL
+end
