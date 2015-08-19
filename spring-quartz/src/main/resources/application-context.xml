@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.bahadirakin"/>
+
+    <!-- Creating new Quartz scheduler for JobDetail and with the cron trigger defined above -->
+    <bean id="quartzSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+          depends-on="quartzDbInitializer">
+        <property name="dataSource" ref="quartzDataSource"/>
+        <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.threadPool.threadCount">2</prop>
+                <prop key="org.quartz.scheduler.instanceName">AccountScheduler</prop>
+                <prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+                <prop key="org.quartz.scheduler.skipUpdateCheck">true</prop>
+                <prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
+                <prop key="org.quartz.jobStore.isClustered">TRUE</prop>
+                <prop key="org.quartz.jobStore.clusterCheckinInterval">10000</prop>
+                <prop key="org.quartz.jobStore.tablePrefix">QRTZ_</prop>
+                <prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
+                <!--<prop key="org.quartz.jobStore.class">org.quartz.simpl.RAMJobStore</prop>-->
+            </props>
+        </property>
+    </bean>
+
+    <!-- Our quartz instance uses JDBC Job store which supports clustered environments -->
+    <bean id="quartzDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="org.h2.Driver"/>
+        <property name="jdbcUrl" value="jdbc:h2:mem:h2QuartzDb"/>
+        <property name="user" value="test"/>
+        <property name="password" value="test"/>
+        <property name="maxPoolSize" value="3"/>
+        <property name="acquireIncrement" value="1"/>
+        <property name="maxStatements" value="0"/>
+        <property name="maxStatementsPerConnection" value="0"/>
+        <property name="initialPoolSize" value="1"/>
+        <property name="idleConnectionTestPeriod" value="10800"/>
+        <property name="maxIdleTime" value="21600"/>
+        <property name="unreturnedConnectionTimeout" value="1000"/>
+        <property name="debugUnreturnedConnectionStackTraces" value="false"/>
+    </bean>
+
+    <!--
+        Quartz needs its own tables to create a JDBC Job stores.
+        This bean initializes database if enabled
+     -->
+    <bean id="quartzDbInitializer" class="org.springframework.jdbc.datasource.init.DataSourceInitializer">
+        <property name="dataSource" ref="quartzDataSource"/>
+        <property name="enabled" value="true"/>
+        <property name="databasePopulator">
+            <bean class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
+                <property name="continueOnError" value="true"/>
+                <property name="ignoreFailedDrops" value="true"/>
+                <property name="sqlScriptEncoding" value="UTF-8"/>
+                <property name="scripts">
+                    <array>
+                        <!-- Quartz will not create tables automatically -->
+                        <value type="org.springframework.core.io.Resource">quartz-h2.sql</value>
+                    </array>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+</beans>
