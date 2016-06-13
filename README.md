@@ -17,11 +17,8 @@ These are my example project to demonstrate some of the topic which are explaine
 * **spring-jpa**: This is an example project which demonstrates how to develop JPA application which uses Spring. In this application Spring also manages trasnactions which are used by JPA...[read more](http://www.bahadirakin.com/spring-ve-jpa/)
 * **spring-prime**: This is an example project which demonstrates how to develop a JSF application which Spring...[read more](http://www.bahadirakin.com/spring-ve-primefaces/)
 * **test-with-mockito**: This is an example project which demonstrates how to develop an application by using Mockito...[read more](http://www.bahadirakin.com/mockito-ilk-adimlar/)
-
-
-
-**user-application**: This is an example project which demonstrates how to develop an application which uses, SpringData, SpringMvc, Mockito, Fongo etc. and deploys Heroku...[read more](http://www.bahadirakin.com/sprinmvc-ve-mongodb-1-projenin-hazirlanmasi/)
-
+* **user-application**: This is an example project which demonstrates how to develop an application which uses, SpringData, SpringMvc, Mockito, Fongo etc. and deploys Heroku...[read more](http://www.bahadirakin.com/sprinmvc-ve-mongodb-1-projenin-hazirlanmasi/)
+* **aws-dynamodb-tutorial**: This is an example project wich demonstrates usage of High Level Java-API usage of DynamoDB
 
 ---
 
